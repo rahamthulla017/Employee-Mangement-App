@@ -98,6 +98,17 @@ A comprehensive Employee Management System built with Django. This application a
 - `config/`: Project main configuration.
 
 ## Contributing
+<img width="1919" height="934" alt="Screenshot 2026-01-30 113037" src="https://github.com/user-attachments/assets/ededb899-90b9-414c-a897-1ea3bcbacc89" />
+
+<img width="1919" height="932" alt="Screenshot 2026-01-30 113115" src="https://github.com/user-attachments/assets/d3d679f0-57f7-4582-86a4-d8f7229f9127" />
+
+<img width="1919" height="931" alt="Screenshot 2026-01-30 113140" src="https://github.com/user-attachments/assets/73f7913b-71a7-4cde-b08a-275d17018986" />
+
+<img width="1919" height="931" alt="Screenshot 2026-01-30 113140" src="https://github.com/user-attachments/assets/cad4f5bb-c1b7-4f3a-9713-d1f19c6035b6" />
+
+
+
+
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
