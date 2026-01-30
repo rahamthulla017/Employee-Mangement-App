@@ -104,7 +104,7 @@ A comprehensive Employee Management System built with Django. This application a
 
 <img width="1919" height="931" alt="Screenshot 2026-01-30 113140" src="https://github.com/user-attachments/assets/73f7913b-71a7-4cde-b08a-275d17018986" />
 
-<img width="1919" height="931" alt="Screenshot 2026-01-30 113140" src="https://github.com/user-attachments/assets/cad4f5bb-c1b7-4f3a-9713-d1f19c6035b6" />
+<img width="1919" height="932" alt="Screenshot 2026-01-30 113201" src="https://github.com/user-attachments/assets/3a3a0387-2f62-47df-90a1-bfeb4409619c" />
 
 
 
