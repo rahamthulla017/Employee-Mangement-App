@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block auth_content %}
+<div class="card"
+    style="padding: 3rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(20px);">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <i class="fas fa-layer-group fa-3x" style="color: var(--primary); margin-bottom: 1rem;"></i>
+        <h2 style="font-size: 2rem;">Welcome Back</h2>
+        <p style="color: var(--text-muted);">Sign in to your account</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div style="margin-bottom: 1.5rem;">
+            <label for="id_username"><i class="fas fa-user" style="margin-right: 0.5rem;"></i>Username</label>
+            <input type="text" name="username" autofocus required id="id_username" placeholder="Enter your username">
+        </div>
+        <div style="margin-bottom: 2rem;">
+            <label for="id_password"><i class="fas fa-lock" style="margin-right: 0.5rem;"></i>Password</label>
+            <input type="password" name="password" required id="id_password" placeholder="••••••••">
+        </div>
+        <button type="submit" style="width: 100%; justify-content: center; font-size: 1.1rem; padding: 1rem;">
+            Sign In <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i>
+        </button>
+    </form>
+
+    <p style="margin-top: 2rem; text-align: center; color: var(--text-muted);">
+        Don't have an account? <a href="{% url 'signup' %}"
+            style="color: var(--primary); font-weight: 600; text-decoration: none;">Create one</a>
+    </p>
+</div>
+{% endblock %}

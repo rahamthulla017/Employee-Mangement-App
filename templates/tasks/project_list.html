@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+        <h1><i class="fas fa-project-diagram" style="margin-right:0.5rem; color: var(--secondary)"></i> Projects</h1>
+        <p style="color:var(--text-muted)">Overview of all company projects.</p>
+    </div>
+    {% if user.role == 'admin' or user.role == 'manager' %}
+    <a href="{% url 'project_create' %}" class="btn"><i class="fas fa-plus"></i> New Project</a>
+    {% endif %}
+</div>
+
+<div class="dashboard-grid">
+    {% for project in projects %}
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; margin-bottom: 1rem;">
+            <div style="font-size: 1.25rem; font-weight: 600; color: var(--text-main);">{{ project.name }}</div>
+            <span class="badge" style="background: rgba(255,255,255,0.05);">{{ project.get_status_display }}</span>
+        </div>
+
+        <p style="color:var(--text-muted); margin-bottom: 1.5rem; height: 3rem; overflow: hidden;">
+            {{ project.description|truncatewords:20 }}
+        </p>
+
+        <div
+            style="background: rgba(255,255,255,0.03); padding: 0.75rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem;">
+            <div style="display:flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                <span style="color: var(--text-muted);">Start:</span>
+                <span>{{ project.start_date }}</span>
+            </div>
+            <div style="display:flex; justify-content: space-between;">
+                <span style="color: var(--text-muted);">End:</span>
+                <span>{{ project.end_date }}</span>
+            </div>
+        </div>
+
+        <div style="display:flex; gap: 0.5rem;">
+            {% if user.role == 'admin' or user.role == 'manager' %}
+            <a href="{% url 'project_update' project.pk %}" class="btn"
+                style="flex:1; justify-content: center; font-size: 0.9rem; padding: 0.5rem; background: #334155;">Edit</a>
+            <a href="{% url 'project_delete' project.pk %}" class="btn btn-danger" style="padding: 0.5rem 0.75rem;"><i
+                    class="fas fa-trash"></i></a>
+            {% else %}
+            <button class="btn" style="width:100%; opacity:0.5; cursor: default; background: #334155;">View
+                Only</button>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">No projects found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

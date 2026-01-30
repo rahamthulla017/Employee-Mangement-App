@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="margin-bottom: 2rem;">
+    <h1><i class="fas fa-user-tie" style="margin-right: 0.5rem; color: var(--primary);"></i> Manager Dashboard</h1>
+    <p style="color: var(--text-muted);">Team oversight and task assignment.</p>
+</div>
+
+<div class="dashboard-grid">
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom: 1rem;">
+            <div
+                style="background: rgba(99, 102, 241, 0.1); padding: 0.75rem; border-radius: 12px; color: var(--primary);">
+                <i class="fas fa-tasks fa-2x"></i>
+            </div>
+        </div>
+        <h3>Assign Tasks</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Create and assign new tasks to your team.</p>
+        <a href="{% url 'task_create' %}" class="btn" style="width:100%; justify-content: center;">Create Task</a>
+    </div>
+
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom: 1rem;">
+            <div
+                style="background: rgba(16, 185, 129, 0.1); padding: 0.75rem; border-radius: 12px; color: var(--secondary);">
+                <i class="fas fa-clipboard-list fa-2x"></i>
+            </div>
+        </div>
+        <h3>Project Status</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Monitor ongoing project progress.</p>
+        <a href="{% url 'project_list' %}" class="btn"
+            style="width:100%; justify-content: center; background: linear-gradient(135deg, var(--secondary), #059669);">View
+            Projects</a>
+    </div>
+
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom: 1rem;">
+            <div
+                style="background: rgba(239, 68, 68, 0.1); padding: 0.75rem; border-radius: 12px; color: var(--danger);">
+                <i class="fas fa-bell fa-2x"></i>
+            </div>
+        </div>
+        <h3>Notifications</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Check recent updates.</p>
+        <a href="{% url 'notification_list' %}" class="btn"
+            style="width:100%; justify-content: center; background: linear-gradient(135deg, var(--danger), #dc2626);">View
+            All</a>
+    </div>
+</div>
+{% endblock %}

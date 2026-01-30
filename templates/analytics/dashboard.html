@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+        <h1><i class="fas fa-chart-pie" style="margin-right:0.5rem; color: #8b5cf6"></i> Analytics Dashboard</h1>
+        <p style="color:var(--text-muted)">Real-time insights and reports.</p>
+    </div>
+    <a href="{% url 'export_tasks_csv' %}" class="btn" style="background: linear-gradient(135deg, #059669, #10b981);">
+        <i class="fas fa-file-csv"></i> Export CSV
+    </a>
+</div>
+
+<div class="dashboard-grid">
+    <!-- Key Metrics -->
+    <div class="card">
+        <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Total Tasks</div>
+        <div style="font-size: 2.5rem; font-weight: 700; color: var(--text-main);">{{ total_tasks }}</div>
+        <div style="font-size: 0.8rem; color: var(--secondary); margin-top: 0.5rem;">
+            <i class="fas fa-arrow-up"></i> Updated recently
+        </div>
+    </div>
+    <div class="card">
+        <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Completed</div>
+        <div style="font-size: 2.5rem; font-weight: 700; color: #34d399;">{{ completed_tasks }}</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+            Tasks finished
+        </div>
+    </div>
+    <div class="card">
+        <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Pending</div>
+        <div style="font-size: 2.5rem; font-weight: 700; color: #fbbf24;">{{ pending_tasks }}</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+            Needs attention
+        </div>
+    </div>
+    <div class="card">
+        <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Active Projects</div>
+        <div style="font-size: 2.5rem; font-weight: 700; color: #60a5fa;">{{ active_projects }}</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+            Currently running
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="card" style="grid-column: span 1 /* mobile */;">
+        <h3 style="margin-bottom: 1.5rem;">Task Status</h3>
+        <div style="position: relative; height: 250px;">
+            <canvas id="statusChart"></canvas>
+        </div>
+    </div>
+    <div class="card" style="grid-column: span 1;">
+        <h3 style="margin-bottom: 1.5rem;">Task Priority</h3>
+        <div style="position: relative; height: 250px;">
+            <canvas id="priorityChart"></canvas>
+        </div>
+    </div>
+
+    {% if ai_suggestions %}
+    <div class="card"
+        style="grid-column: 1 / -1; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1)); border: 1px solid rgba(99, 102, 241, 0.2);">
+        <h3 style="color: #c084fc;"><i class="fas fa-sparkles" style="margin-right:0.5rem;"></i> AI Insights</h3>
+        <ul style="list-style: none; padding: 0; margin-top: 1rem;">
+            {% for suggestion in ai_suggestions %}
+            <li
+                style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <strong style="color: var(--text-main);">{{ suggestion.task.title }}</strong>
+                    <span style="display:block; font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem;">{{
+                        suggestion.reason }}</span>
+                </div>
+                <a href="{% url 'task_update' suggestion.task.pk %}" class="btn"
+                    style="padding: 0.5rem 1rem; font-size: 0.8rem;">Review</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.05)';
+
+    const statusCtx = document.getElementById('statusChart').getContext('2d');
+    const priorityCtx = document.getElementById('priorityChart').getContext('2d');
+
+    const statusData = {
+        labels: {{ task_status_labels| safe }},
+    datasets: [{
+        label: 'Tasks',
+        data: {{ task_status_data| safe }},
+        backgroundColor: [
+        '#f87171', // Red
+        '#60a5fa', // Blue
+        '#34d399', // Green
+    ],
+        borderWidth: 0
+        }]
+    };
+
+    const priorityData = {
+        labels: {{ task_priority_labels| safe }},
+    datasets: [{
+        label: 'Priority',
+        data: {{ task_priority_data| safe }},
+        backgroundColor: [
+        '#2dd4bf',
+        '#a78bfa',
+        '#fbbf24',
+    ],
+        borderRadius: 6,
+        borderWidth: 0
+        }]
+    };
+
+    new Chart(statusCtx, {
+        type: 'doughnut',
+        data: statusData,
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right' }
+            }
+        }
+    });
+
+    new Chart(priorityCtx, {
+        type: 'bar',
+        data: priorityData,
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+{% endblock %}
